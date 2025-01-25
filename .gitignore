@@ -1,6 +1,6 @@
-*.o
-dusk
-duskc
-config.*
-*.txt
-*.sh
+dusk-wm/*.o
+dusk-wm/dusk
+dusk-wm/duskc
+dusk-wm/config.*
+dusk-wm/*.txt
+dusk-wm/*.sh

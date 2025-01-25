@@ -8,7 +8,7 @@ exit
 #include <stdbool.h>
 #include <string.h>
 
-#define TEMP_FILE "/home/y/.dwm/dwmblocks_scripts/.bt_tmp" // Adjust the path as needed
+#define TEMP_FILE "$HOME/.dwm/dwmblocks_scripts/.bt_tmp" // Adjust the path as needed
 #define CONNECTED_ICON "^c#f6bbe7^ 󰂯 ^d^"
 #define DISCONNECTED_ICON "^c#4c566a^ 󰂲 ^d^"
 
@@ -73,14 +73,14 @@ int main() {
 
     if (connected) {
         if (prev_state == 1) {
-            send_notification("/home/y/.dwm/notif_icons/airpods_vec.png",
+            send_notification("$HOME/.dwm/notif_icons/airpods_vec.png",
                               "AirPods Connected!", "Your AirPods are now connected.");
             save_state(2);
         }
         printf("%s\n", CONNECTED_ICON);
     } else {
         if (prev_state == 2) {
-            send_notification("/home/y/.dwm/notif_icons/airpods_disconnected.png",
+            send_notification("$HOME/.dwm/notif_icons/airpods_disconnected.png",
                               "AirPods Disconnected!", "Your AirPods have been disconnected.");
         }
         save_state(1);
