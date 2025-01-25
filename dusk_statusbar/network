@@ -1,0 +1,10 @@
+#! /bin/bash
+
+if [[ $(tail -n+3 /proc/net/wireless 2>/dev/null) ]]; then
+	ssid=$(nmcli -t -f name connection show --active | head -n 1)
+	wireless_icon="^c#f6bbe7^ ^d^" 
+else
+	wireless_icon="^c#4c566a^ ^d^"
+fi
+
+printf "$wireless_icon"

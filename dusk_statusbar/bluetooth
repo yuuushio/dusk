@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#devices=$(bluetoothctl info | grep "Device " | cut -d' ' -f2-)
+
+#if [ "$devices" != "" ]; then
+#  echo "$devices"
+#else
+#  echo "No devices connected."
+#fi
+
+notif=$(cat ~/.dwm/dwmblocks_scripts/.bt_tmp)
+
+devices=$(bluetoothctl info | grep "Device " | cut -d' ' -f2-)
+
+if [ "$devices" != "" ]; then
+	if [ $notif == 1 ] && [ $notif != 2 ]; then
+		dunstify -i ~/.dwm/notif_icons/airpods_vec.png -u normal -h string:x-dunst-stack-tag:screenshot -a "♦ Bluetooth ♦" "Airpods Connected!"
+		notif=2
+		printf "$notif" > ~/.dwm/dwmblocks_scripts/.bt_tmp
+	fi
+	printf "^c#f6bbe7^󰂯^d^" 
+else
+	if [ $notif == 2 ]; then
+		dunstify -i ~/.dwm/notif_icons/airpods_disconnected.png -u normal -h string:x-dunst-stack-tag:screenshot -a "♦ Bluetooth ♦" "Airpods Disconnected!"
+	fi
+	notif=1
+	printf "$notif" > ~/.dwm/dwmblocks_scripts/.bt_tmp
+	printf "^c#4c566a^󰂲^d^"
+fi
+

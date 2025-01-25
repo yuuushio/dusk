@@ -1,0 +1,4 @@
+#!/bin/bash
+
+dt_time=`date '+%b %d (%a) %I:%M%p' | awk '{print $4}'`
+printf "^n^^c#b8dceb^${dt_time}^d^"

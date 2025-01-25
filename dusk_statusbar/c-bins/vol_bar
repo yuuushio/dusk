@@ -1,0 +1,80 @@
+#!/bin/sh
+
+##########################################
+case $BLOCK_BUTTON in
+	1) setsid -f "$TERMINAL" -e pulsemixer ;;
+	2) pamixer -t ;;
+	4) pamixer --allow-boost -i 1 ;;
+	5) pamixer --allow-boost -d 1 ;;
+	3) notify-send "📢 Volume module" "\- Shows volume 🔊, 🔇 if muted.
+- Middle click to mute.
+- Scroll to change." ;;
+	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+[ $(pamixer --get-mute) == true ] && echo 󰖁 && exit
+
+## prep ##
+calc(){ awk "BEGIN { print "$*" }"; }
+
+
+vol="$(pamixer --get-volume)"
+
+#####################
+
+if [ "$vol" -gt 70 ]; then
+	icon=" "
+elif [ "$vol" -lt 30 ]; then
+	icon=" "
+else
+	icon=" "
+fi
+##########################################
+
+num_bars=10
+
+calc(){ awk "BEGIN { print "$*" }"; }
+perc=100
+is_err=`python ~/.dwm/dwmblocks_scripts/is_error.py`
+fin_occ="-"
+fin_rem="-"
+
+if [ $is_err = "true" ]; then
+	echo "$fin_occ$fin_rem"
+else
+	vol=`pamixer --get-volume`
+
+	curr_vol_bars=`calc $vol/$perc*$num_bars`
+
+	remaining_bars=`calc $num_bars-$curr_vol_bars`
+	rdd=`printf "%2.0f" $curr_vol_bars | sed 's/\.[0-9]*$//'`
+
+	rem=`printf "%2.0f" $remaining_bars`
+	rdd=`printf "%d" $rdd`
+	rem=`printf "%d" $rem`
+	if [ $rdd -ge $num_bars ]; then
+		rdd=$num_bars
+	fi
+	#printf '─%.0s' {0..rem_test}
+	fin_occ=`seq 1 $rdd | xargs -I {} printf "─"` # ━
+
+	if [ $rdd -ge $num_bars ]; then
+		fin_rem=""
+	else
+		fin_rem=`seq 1 $rem | xargs -I {} printf "─"`
+	fi
+
+fi
+
+
+##########################
+
+vol="$(pamixer --get-volume)"
+##########################
+
+ICON_SYMB=^c#4c566a^
+VOL_COL=^c#b8dceb^
+
+echo "${ICON_SYMB}${icon}^c#b8dceb^$fin_occ^d^^c#434c5e^$fin_rem${VOL_COL} ${vol}%^d^"
+
+

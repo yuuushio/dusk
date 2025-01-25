@@ -1,0 +1,12 @@
+#!/bin/bash
+
+COLOR_SYMBOL=^C4^
+COLOR_HL=^c#FFF7D4^
+COLOR_NORM=^c#C6BDBD^
+#COLOR_HL=
+#COLOR_NORM=
+symb=' 󰍛 '
+
+used_norm=$(free -m | awk '/Mem/ {printf "%.1fG\n", $3 / 1024}')
+echo "${COLOR_SYMBOL}${symb}^c#434c5e^$used_norm^d^"
+#echo "${COLOR_SYMBOL}${symb:(((${#symb}-1)*${mem[0]}/${mem[1]})):1}^d^ ${COLOR_HL}${NOM}${COLOR_NORM}/${DEN} ${COLOR_HL}MB^d^"

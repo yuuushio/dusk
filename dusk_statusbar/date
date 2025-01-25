@@ -1,0 +1,4 @@
+#!/bin/bash
+
+date=`date '+%a, %b %d'`
+printf "^c#434c5e^${date}^d^"
